@@ -8,16 +8,16 @@ async function main() {
     stderr: "pipe",
   });
 
-  transport.onerror = (error) => {
-    console.log("debug caught", error);
-  };
-
   const client = new Client({
     name: "example-client",
     version: "1.0.0",
   });
 
   await client.connect(transport);
+
+  transport.onerror = (error) => {
+    console.log("debug caught", error);
+  };
 
   const response = await client.callTool({
     name: "get-forecast",
@@ -26,7 +26,6 @@ async function main() {
       longitude: 90,
     },
   });
-
   console.log("debug", response);
 }
 
